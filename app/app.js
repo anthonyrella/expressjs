@@ -5,6 +5,9 @@ var dataFile = require('./data/data.json');
 app.set('port', process.env.PORT || 3000 );
 app.set('appData', dataFile);
 
+//designate the app/public folder to be avaiable to anyone of the documents 
+//basically making this public folder a root within the site. Enables you to get things relative to the root
+app.use(express.static('app/public'));
 app.use(require('./routes/index'));
 app.use(require('./routes/speakers'));
 
