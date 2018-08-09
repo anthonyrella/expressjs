@@ -1,4 +1,6 @@
 var express = require('express');
+//needed for that automatic reloading 
+var reload = require('reload');
 var app = express();
 var dataFile = require('./data/data.json');
 
@@ -14,3 +16,6 @@ app.use(require('./routes/speakers'));
 var server = app.listen(app.get('port'), function() {
   console.log('Listening on port ' + app.get('port'));
 });
+
+//take care of reloading things for workflow
+reload(server, app);
