@@ -1,6 +1,7 @@
 $(function() {
+  //sending a get request to backend route
   $.getJSON('api', updateFeedback);
-
+  //sending a post request to the backend route
   $('.feedback-form').submit(function(e) {
     e.preventDefault();
     $.post('api', {
@@ -10,11 +11,25 @@ $(function() {
     }, updateFeedback);
   });
 
+  //sending a delete request to the backend route
+  $('.feedback-messages').on('click', function(e){
+
+    if(e.target.className == 'glyphicon glyphicon-remove'){
+      $.ajax({
+        //targeting the id of the span tag of the button element
+        url: 'api/' + e.target.id,
+        type: 'DELETE', 
+        success: updateFeedback
+      }); //ajax
+    } //the target is a delete button
+  }); //feedback messages
+
   function updateFeedback(data) {
    var output = '';
    $.each(data,function(key, item) {
      output += '     <div class="feedback-item item-list media-list">';
      output += '       <div class="feedback-item media">';
+     output += '       <div class="media-left"><button class="feedback-delete btn btn-xs btn-danger"><span id="'+ key +'" class="glyphicon glyphicon-remove"></span></button></div>';
      output += '         <div class="feedback-info media-body">';
      output += '           <div class="feedback-head">';
      output += '             <div class="feedback-title">' + item.title + ' <small class="feedback-name label label-info">' + item.name + '</small></div>';
